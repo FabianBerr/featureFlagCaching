@@ -17,6 +17,7 @@
   "cds": {
     "profile": "with-mtx-sidecar",
     "requires": {
+      "toggles": true,
       "[production]": {
         "multitenancy": true
       },
