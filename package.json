@@ -4,6 +4,7 @@
   "description": "A simple CAP project.",
   "dependencies": {
     "@sap/cds": "^9",
+    "@sap/cds-mtxs": "^3",
     "express": "^4"
   },
   "devDependencies": {
@@ -12,5 +13,45 @@
   "scripts": {
     "start": "cds-serve"
   },
-  "private": true
+  "private": true,
+  "cds": {
+    "profile": "with-mtx-sidecar",
+    "requires": {
+      "[production]": {
+        "multitenancy": true
+      },
+      "[with-mtx]": {
+        "multitenancy": true
+      },
+      "auth": {
+        "kind": "mocked",
+        "users": {
+          "t1": {
+            "tenant": "t1",
+            "roles": [
+              "cds.Subscriber",
+              "internal-user"
+            ]
+          },
+          "t2": {
+            "tenant": "t2",
+            "roles": [
+              "cds.Subscriber",
+              "internal-user"
+            ]
+          }
+        },
+        "tenants": {
+          "t1": {
+            "features": [
+              "isbn"
+            ]
+          },
+          "t2": {
+            "features": []
+          }
+        }
+      }
+    }
+  }
 }
