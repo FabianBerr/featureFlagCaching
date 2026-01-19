@@ -84,9 +84,9 @@ modules:
       commands:
         - npm ci
         - npm run build:cf
-      supported-platforms:
-        []
-  - name: minimalsample
+      supported-platforms: []
+
+  - name: minimalsample-router
     type: approuter.nodejs
     path: app/router
     parameters:
@@ -108,6 +108,7 @@ modules:
           name: mtx-api # must be used in xs-app.json as well
           url: ~{mtx-url}
       - name: minimalsample-auth
+      - name: minimalsample-repo-runtime
     provides:
       - name: app-api
         properties:
@@ -152,6 +153,12 @@ resources:
     parameters:
       service: html5-apps-repo
       service-plan: app-host
+
+  - name: minimalsample-repo-runtime
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service-plan: app-runtime
+      service: html5-apps-repo
   - name: minimalsample-destination
     type: org.cloudfoundry.managed-service
     parameters:

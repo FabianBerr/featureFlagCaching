@@ -27,6 +27,9 @@
       "toggles": true,
       "[production]": {
         "multitenancy": true,
+        "db": {
+          "kind": "hana-mt"
+        },
         "auth": {
           "kind": "xsuaa"
         }
