@@ -49,7 +49,10 @@ modules:
       - name: mtx-api
         properties:
           mtx-url: ${default-url}
-    requires: []
+    requires:
+      - name: app-api
+        properties:
+          SUBSCRIPTION_URL: ~{app-protocol}://\${tenant_subdomain}-~{app-uri}
 
   - name: minimalsample-app-deployer
     type: com.sap.application.content
@@ -76,6 +79,64 @@ modules:
         - npm ci
         - npm run build:cf
       supported-platforms: []
+  - name: minimalsample
+    type: approuter.nodejs
+    path: app/router
+    parameters:
+      keep-existing-routes: true
+      disk-quota: 256M
+      memory: 256M
+    properties:
+      TENANT_HOST_PATTERN: "^(.*)-${default-uri}"
+    requires:
+      - name: srv-api
+        group: destinations
+        properties:
+          name: srv-api # must be used in xs-app.json as well
+          url: ~{srv-url}
+          forwardAuthToken: true
+      - name: mtx-api
+        group: destinations
+        properties:
+          name: mtx-api # must be used in xs-app.json as well
+          url: ~{mtx-url}
+    provides:
+      - name: app-api
+        properties:
+          app-protocol: ${protocol}
+          app-uri: ${default-uri}
+
+  - name: minimalsample-destination-content
+    type: com.sap.application.content
+    requires:
+      - name: minimalsample-auth
+        parameters:
+          service-key:
+            name: minimalsample-auth-key
+      - name: minimalsample-html5-repo-host
+        parameters:
+          service-key:
+            name: minimalsample-html5-repo-host-key
+      - name: srv-api
+      - name: minimalsample-destination
+        parameters:
+          content-target: true
+    parameters:
+      content:
+        instance:
+          destinations:
+            - Name: minimalsample-html5-repo-host
+              ServiceInstanceName: minimalsample-html5-repo-host
+              ServiceKeyName: minimalsample-html5-repo-host-key
+              sap.cloud.service: bookshopmtx
+            - Authentication: OAuth2UserTokenExchange
+              Name: minimalsample-auth
+              ServiceInstanceName: minimalsample-auth
+              ServiceKeyName: minimalsample-auth-key
+              sap.cloud.service: bookshopmtx
+          existing_destinations_policy: update
+    build-parameters:
+      no-source: true
 
 resources:
   - name: minimalsample-html5-repo-host
@@ -83,6 +144,17 @@ resources:
     parameters:
       service: html5-apps-repo
       service-plan: app-host
+  - name: minimalsample-destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-name: kronesdigitalmes-destination
+      service-plan: lite
+      config:
+        HTML5Runtime_enabled: true
+        version: 1.0.0
+    requires:
+      - name: srv-api
   - name: minimalsample-registry
     type: org.cloudfoundry.managed-service
     requires:
