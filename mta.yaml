@@ -25,6 +25,7 @@ modules:
           srv-url: ${default-url}
     requires:
       - name: minimalsample-auth
+      - name: minimalsample-db
 
   - name: minimalsample-mtx
     type: nodejs
@@ -57,6 +58,7 @@ modules:
           SUBSCRIPTION_URL: ~{app-protocol}://\${tenant_subdomain}-~{app-uri}
       - name: minimalsample-auth
       - name: minimalsample-registry
+      - name: minimalsample-db
 
   - name: minimalsample-app-deployer
     type: com.sap.application.content
@@ -82,7 +84,8 @@ modules:
       commands:
         - npm ci
         - npm run build:cf
-      supported-platforms: []
+      supported-platforms:
+        []
   - name: minimalsample
     type: approuter.nodejs
     path: app/router
@@ -199,3 +202,8 @@ resources:
             - https://*~{app-api/app-uri}/**
     requires:
       - name: app-api
+  - name: minimalsample-db
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: service-manager
+      service-plan: container
