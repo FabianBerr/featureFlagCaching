@@ -23,7 +23,8 @@ modules:
       - name: srv-api # required by consumers of CAP services (e.g. approuter)
         properties:
           srv-url: ${default-url}
-    requires: []
+    requires:
+      - name: minimalsample-auth
 
   - name: minimalsample-mtx
     type: nodejs
@@ -34,6 +35,7 @@ modules:
       instances: 1
       memory: 256M
       disk-quota: 512M
+      tenant-mode: shared
     hooks:
       - name: upgrade-all
         type: task
@@ -53,6 +55,8 @@ modules:
       - name: app-api
         properties:
           SUBSCRIPTION_URL: ~{app-protocol}://\${tenant_subdomain}-~{app-uri}
+      - name: minimalsample-auth
+      - name: minimalsample-registry
 
   - name: minimalsample-app-deployer
     type: com.sap.application.content
@@ -100,6 +104,7 @@ modules:
         properties:
           name: mtx-api # must be used in xs-app.json as well
           url: ~{mtx-url}
+      - name: minimalsample-auth
     provides:
       - name: app-api
         properties:
@@ -175,3 +180,22 @@ resources:
           onUnSubscriptionAsync: true
           onUpdateDependenciesAsync: true
           callbackTimeoutMillis: 300000 # Increase if your deployments are taking longer than that
+  - name: minimalsample-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: minimalsample-${org}-${space}
+        tenant-mode: shared
+        role-collections:
+          - name: "admin (minimalsample ${org}-${space})"
+            description: "generated"
+            role-template-references:
+              - "$XSAPPNAME.admin"
+        oauth2-configuration:
+          redirect-uris:
+            - https://*~{app-api/app-uri}/**
+    requires:
+      - name: app-api

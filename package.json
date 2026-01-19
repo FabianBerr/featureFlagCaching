@@ -5,7 +5,8 @@
   "dependencies": {
     "@sap/cds": "^9",
     "@sap/cds-mtxs": "^3",
-    "express": "^4"
+    "express": "^4",
+    "@sap/xssec": "^4"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^2",
@@ -14,6 +15,7 @@
   },
   "scripts": {
     "start": "cds-serve",
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
     "build": "rimraf resources mta_archives && mbt build --mtar archive",
     "undeploy": "cf undeploy minimalsample --delete-services --delete-service-keys --delete-service-brokers"
   },
@@ -23,7 +25,10 @@
     "requires": {
       "toggles": true,
       "[production]": {
-        "multitenancy": true
+        "multitenancy": true,
+        "auth": {
+          "kind": "xsuaa"
+        }
       },
       "[with-mtx]": {
         "multitenancy": true
