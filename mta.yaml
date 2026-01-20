@@ -37,17 +37,17 @@ modules:
       memory: 256M
       disk-quota: 512M
       tenant-mode: shared
-    hooks:
-      - name: upgrade-all
-        type: task
-        phases:
-          - blue-green.application.before-start.idle
-          - deploy.application.before-start
-        parameters:
-          name: upgrade
-          memory: 512M # increase as required
-          disk-quota: 768M # increase as required
-          command: cds-mtx upgrade '*'
+    #    hooks:
+    #      - name: upgrade-all
+    #        type: task
+    #        phases:
+    #          - blue-green.application.before-start.idle
+    #          - deploy.application.before-start
+    #        parameters:
+    #          name: upgrade
+    #          memory: 512M # increase as required
+    #          disk-quota: 768M # increase as required
+    #          command: cds-mtx upgrade '*'
     provides:
       - name: mtx-api
         properties:
@@ -59,6 +59,8 @@ modules:
       - name: minimalsample-auth
       - name: minimalsample-registry
       - name: minimalsample-db
+      - name: minimalsample-repo-runtime
+      - name: minimalsample-destination
 
   - name: minimalsample-app-deployer
     type: com.sap.application.content
