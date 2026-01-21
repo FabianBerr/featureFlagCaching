@@ -5,7 +5,7 @@
         {
             "source": "^/odata/v4/catalog/(.*)$",
             "target": "/odata/v4/catalog/$1",
-            "destination": "srv_api",
+            "destination": "srv-api",
             "authenticationType": "xsuaa",
             "csrfProtection": false
         },
