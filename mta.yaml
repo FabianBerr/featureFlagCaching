@@ -19,6 +19,8 @@ modules:
       buildpack: nodejs_buildpack
     build-parameters:
       builder: npm-ci
+      ignore:
+        - node_modules/
     provides:
       - name: srv-api # required by consumers of CAP services (e.g. approuter)
         properties:
@@ -32,22 +34,23 @@ modules:
     path: gen/mtx/sidecar
     build-parameters:
       builder: npm-ci
+      ignore:
+        - node_modules/
     parameters:
       instances: 1
       memory: 256M
       disk-quota: 512M
-      tenant-mode: shared
-    #    hooks:
-    #      - name: upgrade-all
-    #        type: task
-    #        phases:
-    #          - blue-green.application.before-start.idle
-    #          - deploy.application.before-start
-    #        parameters:
-    #          name: upgrade
-    #          memory: 512M # increase as required
-    #          disk-quota: 768M # increase as required
-    #          command: cds-mtx upgrade '*'
+    hooks:
+      - name: upgrade-all
+        type: task
+        phases:
+          - blue-green.application.before-start.idle
+          - deploy.application.before-start
+        parameters:
+          name: upgrade
+          memory: 512M # increase as required
+          disk-quota: 768M # increase as required
+          command: cds-mtx upgrade '*'
     provides:
       - name: mtx-api
         properties:
@@ -91,6 +94,9 @@ modules:
   - name: minimalsample-router
     type: approuter.nodejs
     path: app/router
+    build-parameters:
+      ignore:
+        - node_modules/
     parameters:
       keep-existing-routes: true
       disk-quota: 256M
