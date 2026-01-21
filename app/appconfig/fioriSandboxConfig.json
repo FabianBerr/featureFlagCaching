@@ -69,7 +69,7 @@
               },
               "resolutionResult": {
                 "applicationType": "SAPUI5",
-                "additionalInformation": "SAPUI5.Component=bookshop",
+                "additionalInformation": "SAPUI5.Component=minimalsample.browse",
                 "url": "browse/webapp"
               }
             },
