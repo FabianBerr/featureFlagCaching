@@ -28,6 +28,7 @@ modules:
     requires:
       - name: minimalsample-auth
       - name: minimalsample-db
+      - name: minimalsample-feature-flags
 
   - name: minimalsample-mtx
     type: nodejs
@@ -222,3 +223,9 @@ resources:
     parameters:
       service: service-manager
       service-plan: container
+
+  - name: minimalsample-feature-flags
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: feature-flags
+      service-plan: lite

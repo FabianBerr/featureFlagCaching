@@ -6,7 +6,9 @@
     "@cap-js/hana": "^2",
     "@sap/cds": "^9",
     "@sap/cds-mtxs": "^3",
+    "@sap/xsenv": "^6.0.0",
     "@sap/xssec": "^4",
+    "axios": "^1.13.4",
     "express": "^4"
   },
   "devDependencies": {
@@ -20,7 +22,7 @@
     "build": "rimraf resources mta_archives && mbt build --mtar archive",
     "undeploy": "cf undeploy minimalsample --delete-services --delete-service-keys --delete-service-brokers",
     "watch:sidecar": "cds watch mtx/sidecar",
-    "watch:withmtx": "cds watch --with-mtx"
+    "watch:withmtx": "cds watch --profile with-mtx"
   },
   "private": true,
   "cds": {
