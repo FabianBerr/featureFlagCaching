@@ -1,5 +1,5 @@
 {
-  "welcomeFile": "/bookshop/",
+  "welcomeFile": "/minimalsamplebrowse/",
   "logout": {
     "logoutEndpoint": "/do/logout"
   },
