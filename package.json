@@ -4,11 +4,13 @@
   "description": "A simple CAP project.",
   "dependencies": {
     "@cap-js/hana": "^2",
+    "@sap-cloud-sdk/resilience": "^4.4.0",
     "@sap/cds": "^9",
     "@sap/cds-mtxs": "^3",
     "@sap/xsenv": "^6.0.0",
     "@sap/xssec": "^4",
     "axios": "^1.13.4",
+    "cds-caching": "^1.1.0",
     "express": "^4"
   },
   "devDependencies": {
@@ -69,6 +71,23 @@
             "features": []
           }
         }
+      },
+      "caching": {
+        "impl": "cds-caching",
+        "namespace": "caching",
+        "store": "sqlite",
+        "keyManagement": {
+          "isTenantAware": true
+        },
+        "credentials": {
+          "url": "sqlite://./cache.sqlite",
+          "table": "cache",
+          "busyTimeout": 10000
+        }
+      },
+      "bp-caching": {
+        "impl": "cds-caching",
+        "namespace": "bp-caching"
       }
     }
   },

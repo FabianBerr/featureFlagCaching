@@ -22,6 +22,10 @@ cds.middlewares.add(async function featureToggleMiddleware(req, _, next) {
                 }
             });
 
+            //const cache = await cds.connect.to("caching");
+            let oCacheEntry = cache.get("test");
+            cache.set("test", "meinCacheInhalt");
+
             if (oFeatureFlagResponse.data?.flags) {
                 aFeatures = oFeatureFlagResponse.data.flags.filter(obj => obj.enabled).map(obj => obj.id);
             }
