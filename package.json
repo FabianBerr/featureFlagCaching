@@ -78,16 +78,7 @@
         "store": "sqlite",
         "keyManagement": {
           "isTenantAware": true
-        },
-        "credentials": {
-          "url": "sqlite://./cache.sqlite",
-          "table": "cache",
-          "busyTimeout": 10000
-        }
-      },
-      "bp-caching": {
-        "impl": "cds-caching",
-        "namespace": "bp-caching"
+        }       
       }
     }
   },

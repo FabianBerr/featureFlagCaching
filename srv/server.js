@@ -7,30 +7,30 @@ cds.middlewares.add(async function featureToggleMiddleware(req, _, next) {
 
     console.log(cds.env.profiles);
     aFeatures = [];
-    if (cds.env.profiles.includes('production')) {
-        if (cds.context.tenant === "002d05a8-0727-4da4-ab38-a31671726bc1" || cds.context.tenant === "tenant2") {
+    //if (cds.env.profiles.includes('production')) {
+    //if (cds.context.tenant === "002d05a8-0727-4da4-ab38-a31671726bc1" || cds.context.tenant === "tenant2") {
 
-            const services = xsenv.getServices({
-                featureflags: { tag: "feature-flags" }
-            });
+    const services = xsenv.getServices({
+        featureflags: { tag: "feature-flags" }
+    });
 
-            const oFeatureFlagResponse = await axios({
-                method: 'get',
-                url: `${services.featureflags.uri}/api/v1/features/export`,
-                headers: {
-                    "Authorization": `Basic ${Buffer.from(`${services.featureflags.username}:${services.featureflags.password}`).toString("base64")}`
-                }
-            });
-
-            //const cache = await cds.connect.to("caching");
-            let oCacheEntry = cache.get("test");
-            cache.set("test", "meinCacheInhalt");
-
-            if (oFeatureFlagResponse.data?.flags) {
-                aFeatures = oFeatureFlagResponse.data.flags.filter(obj => obj.enabled).map(obj => obj.id);
-            }
+    const oFeatureFlagResponse = await axios({
+        method: 'get',
+        url: `${services.featureflags.uri}/api/v1/features/export`,
+        headers: {
+            "Authorization": `Basic ${Buffer.from(`${services.featureflags.username}:${services.featureflags.password}`).toString("base64")}`
         }
-        req.features = aFeatures;
+    });
+
+    const cache = await cds.connect.to("caching");
+    let oCacheEntry = await cache.get("test");
+    cache.set("test", "meinCacheInhalt");
+
+    if (oFeatureFlagResponse.data?.flags) {
+        aFeatures = oFeatureFlagResponse.data.flags.filter(obj => obj.enabled).map(obj => obj.id);
     }
+    //}
+    req.features = aFeatures;
+    //}
     next();
 }, { before: 'ctx_model' });
