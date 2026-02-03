@@ -1,36 +1,45 @@
-const cds = require('@sap/cds');
-const axios = require('axios');
+const cds = require("@sap/cds");
+const axios = require("axios");
 const xsenv = require("@sap/xsenv");
 xsenv.loadEnv();
 
-cds.middlewares.add(async function featureToggleMiddleware(req, _, next) {
+cds.middlewares.add(
+    async function featureToggleMiddleware(req, _, next) {
+        console.log(cds.env.profiles);
+        aFeatures = [];
+        //if (cds.env.profiles.includes('production')) {
+        // if (cds.context.tenant === "002d05a8-0727-4da4-ab38-a31671726bc1" || cds.context.tenant === "tenant2") {
 
-    console.log(cds.env.profiles);
-    aFeatures = [];
-    if (cds.env.profiles.includes('production')) {
-        if (cds.context.tenant === "002d05a8-0727-4da4-ab38-a31671726bc1" || cds.context.tenant === "tenant2") {
+        const services = xsenv.getServices({
+            featureflags: { tag: "feature-flags" },
+        });
 
-            const services = xsenv.getServices({
-                featureflags: { tag: "feature-flags" }
-            });
-
+        const cache = await cds.connect.to("caching");
+        let oCachedFeatures = await cache.get("enabledFeatures");
+        if (!oCachedFeatures) {
             const oFeatureFlagResponse = await axios({
-                method: 'get',
+                method: "get",
                 url: `${services.featureflags.uri}/api/v1/features/export`,
                 headers: {
-                    "Authorization": `Basic ${Buffer.from(`${services.featureflags.username}:${services.featureflags.password}`).toString("base64")}`
-                }
+                    Authorization: `Basic ${Buffer.from(`${services.featureflags.username}:${services.featureflags.password}`).toString("base64")}`,
+                },
             });
 
-            //const cache = await cds.connect.to("caching");
-            let oCacheEntry = cache.get("test");
-            cache.set("test", "meinCacheInhalt");
-
             if (oFeatureFlagResponse.data?.flags) {
-                aFeatures = oFeatureFlagResponse.data.flags.filter(obj => obj.enabled).map(obj => obj.id);
+                aFeatures = oFeatureFlagResponse.data.flags
+                    .filter((obj) => obj.enabled)
+                    .map((obj) => obj.id);
             }
+            cache.set("enabledFeatures", aFeatures, { ttl: 60000 }); // cache for 1 minute
         }
+        else {
+            aFeatures = oCachedFeatures;
+        }
+
+        // }
         req.features = aFeatures;
-    }
-    next();
-}, { before: 'ctx_model' });
+        //}
+        next();
+    },
+    { before: "ctx_model" },
+);

@@ -1,4 +1,7 @@
 using {CatalogService} from '../../srv/cat-service.cds';
+using {plugin.cds_caching.CachingApiService} from 'cds-caching/index.cds';
+
+annotate CachingApiService with @requires: 'authenticated-user';
 
 ////////////////////////////////////////////////////////////////////////////
 //

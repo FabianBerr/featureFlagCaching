@@ -75,19 +75,16 @@
       "caching": {
         "impl": "cds-caching",
         "namespace": "caching",
-        "store": "sqlite",
+        "kind": "cds-caching",
+        "[development]": {
+          "store": "in-memory"
+        },
+        "[production]": {
+          "store": "redis"
+        },
         "keyManagement": {
           "isTenantAware": true
-        },
-        "credentials": {
-          "url": "sqlite://./cache.sqlite",
-          "table": "cache",
-          "busyTimeout": 10000
         }
-      },
-      "bp-caching": {
-        "impl": "cds-caching",
-        "namespace": "bp-caching"
       }
     }
   },
