@@ -24,12 +24,19 @@
     "build": "rimraf resources mta_archives && mbt build --mtar archive",
     "undeploy": "cf undeploy minimalsample --delete-services --delete-service-keys --delete-service-brokers",
     "watch:sidecar": "cds watch mtx/sidecar",
-    "watch:withmtx": "cds watch --profile with-mtx"
+    "watch:withmtx": "cds watch --profile with-mtx",
+    "watch:hybrid": "cds build --production && cds watch --profile hybrid"
   },
   "private": true,
   "cds": {
     "profile": "with-mtx-sidecar",
     "requires": {
+      "[hybrid]": {
+        "multitenancy": true,
+        "db": {
+          "kind": "hana-mt"
+        }
+      },
       "toggles": true,
       "[production]": {
         "multitenancy": true,
@@ -59,6 +66,13 @@
               "cds.Subscriber",
               "internal-user"
             ]
+          },
+          "t3": {
+            "tenant": "t3",
+            "roles": [
+              "cds.Subscriber",
+              "internal-user"
+            ]
           }
         },
         "tenants": {
@@ -75,10 +89,19 @@
       "caching": {
         "impl": "cds-caching",
         "namespace": "caching",
-        "store": "sqlite",
+        "kind": "cds-caching",
+        "[development]": {
+          "store": "sqlite"
+        },
+        "[hybrid]": {
+          "store": "in-memory"
+        },
+        "[production]": {
+          "store": "redis"
+        },
         "keyManagement": {
           "isTenantAware": true
-        }       
+        }
       }
     }
   },

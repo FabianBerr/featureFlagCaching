@@ -20,7 +20,12 @@
     "profile": "mtx-sidecar",
     "requires": {
       "html5-repo": true,
-      "destinations": true
+      "destinations": true,
+      "[hybrid]": {
+        "db": {
+          "kind": "hana-mt"
+        }
+      }
     }
   }
 }
