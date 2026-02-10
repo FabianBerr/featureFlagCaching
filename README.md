@@ -78,13 +78,37 @@ For more information about Docker Compose, see the official [documentation](http
 
 Learn more at https://cap.cloud.sap/docs/get-started/.
 
+# Feature Toggles
+
+Feature toggles (feature flags) allow you to enable or disable specific functionality without changing or redeploying code. In CAP projects, feature toggles can be used to gradually roll out new features or control tenant-specific functionality.
+
+For more information and implementation guidance, see the official documentation: [Feature Toggles in CAP](https://cap.cloud.sap/docs/guides/extensibility/feature-toggles)
 
 # Starting Modes
 
-- Hybrid Mode : (`npm run watch:hybrid`on root + in sidecar folder `cds watch --profile hybrid`)
+| Mode        | Description                                            | Run                                                                                                                                                                                                                                                                                                  |
+| ----------- | ------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Hybrid Mode | Use Service Manager (HDI Container) on BTP as Database | 1. `cds bind -2 minimalsample-db` && `cds bind -2 minimalsample-feature-flags` <br> 2. `cd mtx\sidecar` <br>3. `cds bind -2 minimalsample-db` (binds service manager also to sidecar) <br> 4. `npm run watch:hybrid`on root (terminal1) + in sidecar folder (terminal2) `cds watch --profile hybrid` |
+| Local MTX   | Local Subscription with SQLITE                         | 1. cds bind -2 minimalsample-feature-flags -4 with-mtx <br> 2. `npm run watch:withmtx`on root + `watch:sidecar`                                                                                                                                                                                      |
 
-| Mode | Description                              | Run 
-| -------------- | ------------------------------------ | -- |
-| Hybrid Mode         | Use Service Manager (HDI Container) on BTP as Database   |1. cds bind -2 minimalsample-db && cds bind -2 minimalsample-feature-flags  2.  `npm run watch:hybrid`on root + in sidecar folder `cds watch --profile hybrid` | 
-| Local MTX          |  Local Subscription with SQLITE | 1. cds bind -2 minimalsample-feature-flags -4 with-mtx 2. `npm run watch:withmtx`on root + `watch:sidecar`|
+## Subscriptions
 
+### Hybrid Mode
+
+1. Initial suscribe:
+
+```shell
+cds subscribe t3 --to http://localhost:4005 -u t3:
+```
+
+2. Upgrade subscription (in case schema changes)
+
+```shell
+cds upgrade t3 --at http://localhost:4005 -u t3:
+```
+
+3. Unsubcribe tenant:
+
+```shell
+cds unsubscribe t3 --from http://localhost:4005 -u t3:
+```
