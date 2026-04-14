@@ -17,6 +17,12 @@
     "start": "cds-serve"
   },
   "cds": {
+    "log": {
+      "format": "plain"
+    },
+    "features": {
+      "kibana_formatter": "false"
+    },
     "profile": "mtx-sidecar",
     "requires": {
       "html5-repo": true,

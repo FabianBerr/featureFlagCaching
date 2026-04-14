@@ -31,6 +31,12 @@
   },
   "private": true,
   "cds": {
+    "log": {
+      "format": "plain"
+    },
+    "features": {
+      "kibana_formatter": "false"
+    },
     "profile": "with-mtx-sidecar",
     "requires": {
       "[hybrid]": {
