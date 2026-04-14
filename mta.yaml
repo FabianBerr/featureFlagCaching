@@ -239,3 +239,20 @@ resources:
     parameters:
       service: feature-flags
       service-plan: lite
+      config:
+        flags:
+          - id: isbn
+            description: isbn feature flag
+            variationType: BOOLEAN
+            enabled: true
+            variations:
+              - "false"
+              - "true"
+            offVariationIndex: 0
+            defaultVariationIndex: 1
+            tags: []
+            metadata: {}
+            directShipments: []
+            ruleShipments: []
+            weightedChoices: []
+            dependencies: []
