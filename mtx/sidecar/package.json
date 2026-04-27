@@ -2,7 +2,7 @@
   "name": "minimalsample-mtx",
   "dependencies": {
     "@cap-js/hana": "^2",
-    "@sap/cds": "^9",
+    "@sap/cds": "~9.8.0",
     "@sap/cds-mtxs": "^3",
     "@sap/xssec": "^4",
     "express": "^4"
