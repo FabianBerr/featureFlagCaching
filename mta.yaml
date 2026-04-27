@@ -29,7 +29,7 @@ modules:
       - name: minimalsample-auth
       - name: minimalsample-db
       - name: minimalsample-feature-flags
-      - name: redis-cache
+      #- name: redis-cache
 
   - name: minimalsample-mtx
     type: nodejs
@@ -225,14 +225,14 @@ resources:
       service: service-manager
       service-plan: container
 
-  - name: redis-cache
-    type: org.cloudfoundry.managed-service
-    parameters:
-      service: redis-cache
-      service-plan: trial
-      service-tags:
-        # Must match the kind property in the package.json
-        - cds-caching
+ #- name: redis-cache
+ #  type: org.cloudfoundry.managed-service
+ #  parameters:
+ #    service: redis-cache
+ #    service-plan: trial
+ #    service-tags:
+ #      # Must match the kind property in the package.json
+ #      - cds-caching
 
   - name: minimalsample-feature-flags
     type: org.cloudfoundry.managed-service
