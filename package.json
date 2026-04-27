@@ -19,6 +19,9 @@
     "@sap/cds-dk": "^9.8.0",
     "cds-plugin-ui5": "^0.16.3"
   },
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "start": "cds-serve",
     "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
@@ -108,7 +111,7 @@
     }
   },
   "workspaces": [
-    "app/*"    
+    "app/*"
   ],
   "sapux": [
     "app/admin-books",
