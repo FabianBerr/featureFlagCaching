@@ -108,7 +108,8 @@
     }
   },
   "workspaces": [
-    "app/*"
+    "app/*",
+    "mtx/*"
   ],
   "sapux": [
     "app/admin-books",
