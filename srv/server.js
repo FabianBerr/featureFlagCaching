@@ -17,16 +17,22 @@ cds.middlewares.add(
         const cache = await cds.connect.to("caching");
         let oCachedFeatures = await cache.get("enabledFeatures");
         if (!oCachedFeatures) {
-            const oFeatureFlagResponse = await axios({
-                method: "get",
-                url: `${services.featureflags.uri}/api/v1/features/export`,
+            const oFeatureFlagResponse = await fetch(`${services.featureflags.uri}/api/v1/features/export`,{
+                method: "GET",              
                 headers: {
                     Authorization: `Basic ${Buffer.from(`${services.featureflags.username}:${services.featureflags.password}`).toString("base64")}`,
                 },
             });
 
-            if (oFeatureFlagResponse.data?.flags) {
-                aFeatures = oFeatureFlagResponse.data.flags
+            
+            if (!oFeatureFlagResponse.ok) {
+                throw new Error(`Feature flag request failed with status ${oFeatureFlagResponse.status}`);
+            }
+
+             const oFeatureFlagData = await oFeatureFlagResponse.json();
+
+            if (oFeatureFlagData?.flags) {
+                aFeatures = oFeatureFlagData.flags
                     .filter((obj) => obj.enabled)
                     .map((obj) => obj.id);
             }
