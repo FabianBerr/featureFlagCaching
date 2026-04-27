@@ -31,6 +31,18 @@
         "db": {
           "kind": "hana-mt"
         }
+      },
+      "auth": {
+        "kind": "mocked",
+        "users": {
+          "t1": {
+            "tenant": "t1",
+            "roles": [
+              "cds.Subscriber",
+              "internal-user"
+            ]
+          }
+        }
       }
     }
   }
