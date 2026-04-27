@@ -6,7 +6,7 @@
     "@cap-js/hana": "^2",
     "@keyv/redis": "^5.1.6",
     "@sap-cloud-sdk/resilience": "^4.4.0",
-    "@sap/cds": "~9.8.0",
+    "@sap/cds": "^9.8.0",
     "@sap/cds-mtxs": "^3",
     "@sap/xsenv": "^6.0.0",
     "@sap/xssec": "^4",
@@ -16,7 +16,7 @@
   "devDependencies": {
     "@cap-js/sqlite": "^2",
     "@keyv/sqlite": "^4.0.8",
-    "@sap/cds-dk": "~9.8.0",
+    "@sap/cds-dk": "^9.8.0",
     "cds-plugin-ui5": "^0.16.3"
   },
   "scripts": {
