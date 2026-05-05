@@ -89,7 +89,7 @@ For more information and implementation guidance, see the official documentation
 | Mode        | Description                                            | Run                                                                                                                                                                                                                                                                                                  |
 | ----------- | ------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Hybrid Mode | Use Service Manager (HDI Container) on BTP as Database | 1. `cds bind -2 minimalsample-db` && `cds bind -2 minimalsample-feature-flags` <br> 2. `cd mtx\sidecar` <br>3. `cds bind -2 minimalsample-db` (binds service manager also to sidecar) <br> 4. `npm run watch:hybrid`on root (terminal1) + in sidecar folder (terminal2) `cds watch --profile hybrid` |
-| Local MTX   | Local Subscription with SQLITE                         | 1. cds bind -2 minimalsample-feature-flags -4 with-mtx <br> 2. `npm run watch:withmtx`on root + `watch:sidecar`                                                                                                                                                                                      |
+| Local MTX   | Local Subscription with SQLITE                         | 1. `npm run watch:withmtx` on root + `watch:sidecar` on root (second terminal)                                                                                                                                                                                                                       |
 
 ## Subscriptions
 
@@ -98,17 +98,17 @@ For more information and implementation guidance, see the official documentation
 1. Initial suscribe:
 
 ```shell
-cds subscribe t3 --to http://localhost:4005 -u t3:
+cds subscribe t1 --to http://localhost:4005 -u t1:
 ```
 
 2. Upgrade subscription (in case schema changes)
 
 ```shell
-cds upgrade t3 --at http://localhost:4005 -u t3:
+cds upgrade t1 --at http://localhost:4005 -u t1:
 ```
 
 3. Unsubcribe tenant:
 
 ```shell
-cds unsubscribe t3 --from http://localhost:4005 -u t3:
+cds unsubscribe t1 --from http://localhost:4005 -u t1:
 ```

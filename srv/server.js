@@ -3,7 +3,17 @@ const axios = require("axios");
 const xsenv = require("@sap/xsenv");
 xsenv.loadEnv();
 
-cds.middlewares.add(
+
+cds.on(
+    "bootstrap",
+    (app) =>
+    (cds.cov2ap.before = (req, res, next) => {
+        req.features = ["isbn"];
+        next();
+    }),
+);
+
+/* cds.middlewares.add(
     async function featureToggleMiddleware(req, _, next) {
         console.log(cds.env.profiles);
         aFeatures = [];
@@ -48,4 +58,4 @@ cds.middlewares.add(
         next();
     },
     { before: "ctx_model" },
-);
+); */
