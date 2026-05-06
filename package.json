@@ -6,16 +6,16 @@
     "@cap-js-community/odata-v2-adapter": "^1.15.10",
     "@keyv/redis": "^5.1.6",
     "@sap-cloud-sdk/resilience": "^4.4.0",
-    "@sap/cds": "^8",
-    "@sap/cds-mtxs": "^2",
+    "@sap/cds": "^9",
+    "@sap/cds-mtxs": "^3",
     "@sap/xsenv": "^6.0.0",
     "@sap/xssec": "^4",
     "express": "^4"
   },
   "devDependencies": {
-    "@cap-js/sqlite": "^1",
+    "@cap-js/sqlite": "^2",
     "@keyv/sqlite": "^4.0.8",
-    "@sap/cds-dk": "^8",
+    "@sap/cds-dk": "^9",
     "cds-plugin-ui5": "^0.16.3"
   },
   "engines": {
