@@ -4,53 +4,56 @@ const xsenv = require("@sap/xsenv");
 xsenv.loadEnv();
 
 
-cds.on(
+/* cds.on(
     "bootstrap",
     (app) =>
-    (cds.cov2ap.before = (req, res, next) => {
+    (cds.cov2ap.before = async (req, res, next) => {
         req.features = ["isbn"];
         next();
     }),
-);
+); */
 
-/* cds.middlewares.add(
+cds.middlewares.add(
     async function featureToggleMiddleware(req, _, next) {
         console.log(cds.env.profiles);
         aFeatures = [];
         //if (cds.env.profiles.includes('production')) {
         // if (cds.context.tenant === "002d05a8-0727-4da4-ab38-a31671726bc1" || cds.context.tenant === "tenant2") {
 
-        const services = xsenv.getServices({
-            featureflags: { tag: "feature-flags" },
-        });
+        /*    const services = xsenv.getServices({
+               featureflags: { tag: "feature-flags" },
+           }); */
 
         const cache = await cds.connect.to("caching");
         let oCachedFeatures = await cache.get("enabledFeatures");
-        if (!oCachedFeatures) {
-            const oFeatureFlagResponse = await fetch(`${services.featureflags.uri}/api/v1/features/export`,{
-                method: "GET",              
-                headers: {
-                    Authorization: `Basic ${Buffer.from(`${services.featureflags.username}:${services.featureflags.password}`).toString("base64")}`,
-                },
-            });
+        cache.set("enabledFeatures", cds.context.tenant, { ttl: 60000 }); // cache for 1 minute
 
-            
-            if (!oFeatureFlagResponse.ok) {
-                throw new Error(`Feature flag request failed with status ${oFeatureFlagResponse.status}`);
-            }
 
-             const oFeatureFlagData = await oFeatureFlagResponse.json();
-
-            if (oFeatureFlagData?.flags) {
-                aFeatures = oFeatureFlagData.flags
-                    .filter((obj) => obj.enabled)
-                    .map((obj) => obj.id);
-            }
-            cache.set("enabledFeatures", aFeatures, { ttl: 60000 }); // cache for 1 minute
-        }
-        else {
-            aFeatures = oCachedFeatures;
-        }
+        /*  if (!oCachedFeatures) {
+             const oFeatureFlagResponse = await fetch(`${services.featureflags.uri}/api/v1/features/export`,{
+                 method: "GET",              
+                 headers: {
+                     Authorization: `Basic ${Buffer.from(`${services.featureflags.username}:${services.featureflags.password}`).toString("base64")}`,
+                 },
+             });
+ 
+             
+             if (!oFeatureFlagResponse.ok) {
+                 throw new Error(`Feature flag request failed with status ${oFeatureFlagResponse.status}`);
+             }
+ 
+              const oFeatureFlagData = await oFeatureFlagResponse.json();
+ 
+             if (oFeatureFlagData?.flags) {
+                 aFeatures = oFeatureFlagData.flags
+                     .filter((obj) => obj.enabled)
+                     .map((obj) => obj.id);
+             }
+             cache.set("enabledFeatures", aFeatures, { ttl: 60000 }); // cache for 1 minute
+         }
+         else {
+             aFeatures = oCachedFeatures;
+         } */
 
         // }
         req.features = aFeatures;
@@ -58,4 +61,4 @@ cds.on(
         next();
     },
     { before: "ctx_model" },
-); */
+); 

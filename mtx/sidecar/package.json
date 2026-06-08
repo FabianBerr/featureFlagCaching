@@ -41,6 +41,13 @@
               "cds.Subscriber",
               "internal-user"
             ]
+          },
+          "t2": {
+            "tenant": "t2",
+            "roles": [
+              "cds.Subscriber",
+              "internal-user"
+            ]
           }
         }
       }
