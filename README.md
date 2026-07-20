@@ -98,17 +98,17 @@ For more information and implementation guidance, see the official documentation
 1. Initial suscribe:
 
 ```shell
-cds subscribe t3 --to http://localhost:4005 -u t3:
+cds subscribe t1 --to http://localhost:4005 -u t1:
 ```
 
 2. Upgrade subscription (in case schema changes)
 
 ```shell
-cds upgrade t3 --at http://localhost:4005 -u t3:
+cds upgrade t1 --at http://localhost:4005 -u t1:
 ```
 
 3. Unsubcribe tenant:
 
 ```shell
-cds unsubscribe t3 --from http://localhost:4005 -u t3:
+cds unsubscribe t1 --from http://localhost:4005 -u t1:
 ```
