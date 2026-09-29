@@ -32,6 +32,14 @@
           "kind": "hana-mt"
         }
       },
+      "[production]": {
+        "db": {
+          "kind": "hana-mt"
+        },
+        "auth": {
+          "kind": "xsuaa"
+        }
+      },
       "auth": {
         "kind": "mocked",
         "users": {
