@@ -16,6 +16,21 @@
       "csrfProtection": true
     },
     {
+      "source": "^/themes$",
+      "target": "/themeroot/v1",
+      "destination": "theming-service"
+    },
+    {
+      "source": "^/themes/(.*)$",
+      "target": "/themeroot/v1/$1",
+      "destination": "theming-service"
+    },
+    {
+      "source": "^/comsapuitheming.runtime/(.*)$",
+      "target": "$1",
+      "destination": "theming-service"
+    },
+    {
       "source": "^/(.*)$",
       "target": "$1",
       "service": "html5-apps-repo-rt",

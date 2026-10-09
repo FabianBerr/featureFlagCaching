@@ -1,4 +1,5 @@
 {
+  "tenant-mode": "shared",
   "scopes": [
     {
       "name": "$XSAPPNAME.admin",
@@ -21,6 +22,15 @@
         "$XSAPPNAME.admin"
       ],
       "attribute-references": []
+    }
+  ],
+  "role-collections": [
+    {
+      "name": "BrowseBooks_LEP",
+      "description": "Browse Books LEP Role Collection",
+      "role-template-references": [
+        "$XSAPPNAME.admin"
+      ]
     }
   ]
 }

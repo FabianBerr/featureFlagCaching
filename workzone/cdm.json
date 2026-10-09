@@ -1,0 +1,147 @@
+[
+    {
+        "_version": "3.0",
+        "identification": {
+            "id": "BrowseBooks_LEP",
+            "title": "{{title}}",
+            "entityType": "role"
+        },
+        "payload": {
+            "catalogs": [
+                {
+                    "id": "browseBooksCatalog"
+                }
+            ],
+            "spaces": [
+                {
+                    "id": "browseBooksSpace"
+                }
+            ],
+            "apps": [
+                {
+                    "id": "minimalsample.browse"
+                }
+            ]
+        },
+        "texts": [
+            {
+                "locale": "",
+                "textDictionary": {
+                    "title": "Browse Books LEP Role"
+                }
+            }
+        ]
+    },
+    {
+        "_version": "3.0",
+        "identification": {
+            "id": "browseBooksCatalog",
+            "title": "{{title}}",
+            "entityType": "catalog"
+        },
+        "payload": {
+            "viz": [
+                {
+                    "appId": "minimalsample.browse",
+                    "vizId": "Books-display"
+                }
+            ]
+        },
+        "texts": [
+            {
+                "locale": "",
+                "textDictionary": {
+                    "title": "Browse Books Catalog"
+                }
+            }
+        ]
+    },
+    {
+        "_version": "3.1.0",
+        "identification": {
+            "id": "browseBooksSpace",
+            "title": "{{title}}",
+            "description": "{{description}}",
+            "entityType": "space"
+        },
+        "payload": {
+            "contentNodes": [
+                {
+                    "type": "page",
+                    "id": "browseBooksPage"
+                }
+            ]
+        },
+        "texts": [
+            {
+                "locale": "",
+                "textDictionary": {
+                    "title": "Browse Books",
+                    "description": "Browse Books"
+                }
+            }
+        ]
+    },
+    {
+        "_version": "3.1.0",
+        "identification": {
+            "id": "browseBooksPage",
+            "entityType": "page",
+            "title": "{{title}}",
+            "description": "{{description}}"
+        },
+        "payload": {
+            "sections": [
+                {
+                    "id": "browseBooksSection",
+                    "title": "{{sectionTitle}}",
+                    "viz": [
+                        {
+                            "appId": "minimalsample.browse",
+                            "vizId": "Books-display"
+                        }
+                    ]
+                }
+            ]
+        },
+        "texts": [
+            {
+                "locale": "",
+                "textDictionary": {
+                    "title": "Browse Books",
+                    "description": "Browse and manage books",
+                    "sectionTitle": "Books"
+                }
+            }
+        ]
+    },
+    {
+        "_version": "3.2.0",
+        "identification": {
+            "id": "browseBooksSite",
+            "entityType": "site"
+        },
+        "payload": {
+            "siteConfig": {
+                "title": "Browse Books",
+                "alias": "browseBooksSite",
+                "displaySettings": {
+                    "launchpadViewMode": "SpacesAndPages"
+                },
+                "userCapabilities": {
+                    "supportedLanguages": [
+                        "en"
+                    ]
+                },
+                "sessionTimeoutSettings": {
+                    "sessionTimeoutEnabled": true,
+                    "sessionDuration": 2,
+                    "sessionTimeoutAlertTime": 1
+                },
+                "browserSettings": {
+                    "asynchronousModuleLoading": true
+                }
+            }
+        }
+    }
+]

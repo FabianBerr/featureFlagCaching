@@ -4,10 +4,13 @@ version: 1.0.0
 description: "A simple CAP project."
 parameters:
   enable-parallel-deployments: true
+  deploy_mode: html5-repo
 build-parameters:
   before-all:
     - builder: custom
       commands:
+        # - cp workzone/cdm.json app/resources/cdm.json (linux->BAS)
+        - node -e "require('fs').copyFileSync('workzone/cdm.json', 'app/resources/cdm.json')" #(windows command)
         - npm ci
         - npx cds build --production
 modules:
@@ -65,6 +68,8 @@ modules:
       - name: minimalsample-db
       - name: minimalsample-repo-runtime
       - name: minimalsample-destination
+      - name: minimalsample-html5-repo-host
+      - name: minimalsample-workzone
 
   - name: minimalsample-app-deployer
     type: com.sap.application.content
@@ -73,6 +78,7 @@ modules:
       - name: minimalsample-html5-repo-host
         parameters:
           content-target: true
+      - name: minimalsample-workzone
     build-parameters:
       build-result: resources
       requires:
@@ -104,6 +110,8 @@ modules:
       memory: 256M
     properties:
       TENANT_HOST_PATTERN: "^(.*)-${default-uri}"
+      OWN_SAP_CLOUD_SERVICE: '["bookshopmtx"]'
+      COOKIE_BACKWARD_COMPATIBILITY: true # Add
     requires:
       - name: srv-api
         group: destinations
@@ -118,6 +126,8 @@ modules:
           url: ~{mtx-url}
       - name: minimalsample-auth
       - name: minimalsample-repo-runtime
+      - name: minimalsample-workzone
+      - name: minimalsample-destination
     provides:
       - name: app-api
         properties:
@@ -172,7 +182,6 @@ resources:
     type: org.cloudfoundry.managed-service
     parameters:
       service: destination
-      service-name: kronesdigitalmes-destination
       service-plan: lite
       config:
         HTML5Runtime_enabled: true
@@ -207,12 +216,6 @@ resources:
       path: ./xs-security.json
       config:
         xsappname: minimalsample-${org}-${space}
-        tenant-mode: shared
-        role-collections:
-          - name: "admin (minimalsample ${org}-${space})"
-            description: "generated"
-            role-template-references:
-              - "$XSAPPNAME.admin"
         oauth2-configuration:
           redirect-uris:
             - https://*~{app-api/app-uri}/**
@@ -229,3 +232,12 @@ resources:
     parameters:
       service: feature-flags
       service-plan: lite
+
+  - name: minimalsample-workzone
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: build-workzone-standard
+      service-plan: local-entry-point
+      config:
+        providerId: bookshopmtx
+        exposureId: bookshopmtx # exposure id should match the sap.cloud.service in the manifest.json of the apps

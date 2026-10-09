@@ -19,8 +19,17 @@
   "cds": {
     "profile": "mtx-sidecar",
     "requires": {
-      "html5-repo": true,
-      "destinations": true
+      "html5-host": true,
+      "html5-runtime": true,
+      "launchpad": {
+        "vcap": {
+          "label": "build-workzone-standard",
+          "plan": "local-entry-point"
+        },
+        "subscriptionDependency": {
+          "uaa": "xsappname"
+        }
+      }
     }
   }
 }
