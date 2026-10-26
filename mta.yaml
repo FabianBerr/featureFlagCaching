@@ -31,7 +31,6 @@ modules:
     requires:
       - name: minimalsample-auth
       - name: minimalsample-db
-      - name: minimalsample-feature-flags
 
   - name: minimalsample-mtx
     type: nodejs
@@ -86,10 +85,25 @@ modules:
             - browse.zip
           name: browse
           target-path: resources/
+        - artifacts:
+            - card.zip
+          name: card
+          target-path: resources/
 
   - name: browse
     type: html5
     path: app/browse
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm ci
+        - npm run build:cf
+      supported-platforms: []
+
+  - name: card
+    type: html5
+    path: app/card
     build-parameters:
       build-result: dist
       builder: custom
@@ -226,12 +240,6 @@ resources:
     parameters:
       service: service-manager
       service-plan: container
-
-  - name: minimalsample-feature-flags
-    type: org.cloudfoundry.managed-service
-    parameters:
-      service: feature-flags
-      service-plan: lite
 
   - name: minimalsample-workzone
     type: org.cloudfoundry.managed-service

@@ -1,4 +1,4 @@
-const cds = require('@sap/cds');
+/* const cds = require('@sap/cds');
 const axios = require('axios');
 const xsenv = require("@sap/xsenv");
 xsenv.loadEnv();
@@ -30,3 +30,4 @@ cds.middlewares.add(async function featureToggleMiddleware(req, _, next) {
     }
     next();
 }, { before: 'ctx_model' });
+ */
