@@ -10,7 +10,7 @@ build-parameters:
     - builder: custom
       commands:
         # - cp workzone/cdm.json app/resources/cdm.json (linux->BAS)
-        - node -e "require('fs').copyFileSync('workzone/cdm.json', 'app/resources/cdm.json')" #(windows command)
+        - node -e "const fs=require('fs'); fs.mkdirSync('app/resources',{recursive:true}); fs.copyFileSync('workzone/cdm.json','app/resources/cdm.json')" #(plattformunabhängig)
         - npm ci
         - npx cds build --production
 modules:
