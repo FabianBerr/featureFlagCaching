@@ -23,6 +23,9 @@
                 },
                 {
                     "id": "ordersbyshipper"
+                },
+                {
+                    "id": "capcard"
                 }
             ]
         },
@@ -50,6 +53,10 @@
                 },
                 {
                     "appId": "ordersbyshipper",
+                    "vizId": "default"
+                },
+                {
+                    "appId": "capcard",
                     "vizId": "default"
                 }
             ]
@@ -131,7 +138,7 @@
                             ]
                         },
                         {
-                            "id": "ordersByShipperColumn",
+                            "id": "cardColumn",
                             "columnConfig": {
                                 "columnWidth": 12
                             },
@@ -144,6 +151,19 @@
                                             "id": "ordersByShipperWidget",
                                             "viz": {
                                                 "appId": "ordersbyshipper",
+                                                "vizId": "default"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "capCardCell",
+                                    "cellConfig": {},
+                                    "widgets": [
+                                        {
+                                            "id": "capCardWidget",
+                                            "viz": {
+                                                "appId": "capcard",
                                                 "vizId": "default"
                                             }
                                         }

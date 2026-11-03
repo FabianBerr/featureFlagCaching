@@ -89,6 +89,10 @@ modules:
             - card.zip
           name: card
           target-path: resources/
+        - artifacts:
+            - capcard.zip
+          name: cap-card
+          target-path: resources/
 
   - name: browse
     type: html5
@@ -104,6 +108,17 @@ modules:
   - name: card
     type: html5
     path: app/card
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm ci
+        - npm run build:cf
+      supported-platforms: []
+
+  - name: cap-card
+    type: html5
+    path: app/cap-card
     build-parameters:
       build-result: dist
       builder: custom

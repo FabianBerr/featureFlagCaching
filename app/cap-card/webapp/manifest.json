@@ -1,0 +1,100 @@
+{
+    "_version": "1.14.0",
+    "sap.app": {
+        "id": "capcard",
+        "type": "card",
+        "title": "Orders by Shipper",
+        "subTitle": "UI5 Integration Card of Type List",
+        "applicationVersion": {
+            "version": "1.0.0"
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "deviceTypes": {
+            "desktop": true,
+            "phone": true,
+            "tablet": true
+        },
+        "icons": {
+            "icon": "sap-icon://list"
+        }
+    },
+    "sap.card": {
+        "type": "List",
+        "designtime": "dt/configuration",
+        "header": {
+            "title": "Books by Genre {filters>/shipper/selectedItem/title}",
+            "subTitle": "These are the top sellers this month",
+            "icon": {
+                "src": "sap-icon://desktop-mobile"
+            },
+            "status": {
+                "text": "{= ${/@odata.count} ? ${/@odata.count} : ${/value}.length } books"
+            }
+        },
+        "data": {
+            "request": {
+                "url": "./odata/v4/catalog/Books",
+                "parameters": {
+                    "$count": true,
+                    "$filter": "genre_ID eq {filters>/shipper/value}"
+                }
+            },
+            "path": "/value"
+        },
+        "content": {
+            "item": {
+                "title": "{title}",
+                "description": "{author}",
+                "info": {
+                    "value": "{genre_ID}"
+                }
+            },
+            "maxItems": "{parameters>/maxOrdersShown/value}"
+        },
+        "configuration": {
+            "filters": {
+                "shipper": {
+                    "value": "{parameters>/selectedGenreID/value}",
+                    "type": "Select",
+                    "label": "Genre",
+                    "item": {
+                        "path": "/value",
+                        "template": {
+                            "key": "{ID}",
+                            "title": "{name}"
+                        }
+                    },
+                    "data": {
+                        "request": {
+                            "url": "./odata/v4/catalog/Genres"
+                        }
+                    }
+                }
+            },
+            "parameters": {
+                "title": {
+                    "value": "Books by Genre"
+                },
+                "maxOrdersShown": {
+                    "value": "4",
+                    "type": "integer",
+                    "label": "Numbers of books",
+                    "description": "How many books to show in the list."
+                },
+                "selectedGenreID": {
+                    "value": 11,
+                    "label": "The default selected genre"
+                }
+            }
+        }
+    },
+    "sap.platform.mobilecards": {
+        "compatible": false
+    },
+    "sap.cloud": {
+        "public": true,
+        "service": "bookshopmtx"
+    }
+}
