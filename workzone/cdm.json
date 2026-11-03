@@ -1,6 +1,6 @@
 [
     {
-        "_version": "3.0",
+        "_version": "3.2",
         "identification": {
             "id": "BrowseBooks_LEP",
             "title": "{{title}}",
@@ -20,6 +20,9 @@
             "apps": [
                 {
                     "id": "minimalsample.browse"
+                },
+                {
+                    "id": "ordersbyshipper"
                 }
             ]
         },
@@ -33,7 +36,7 @@
         ]
     },
     {
-        "_version": "3.0",
+        "_version": "3.2",
         "identification": {
             "id": "browseBooksCatalog",
             "title": "{{title}}",
@@ -44,6 +47,10 @@
                 {
                     "appId": "minimalsample.browse",
                     "vizId": "Books-display"
+                },
+                {
+                    "appId": "ordersbyshipper",
+                    "vizId": "default"
                 }
             ]
         },
@@ -57,7 +64,7 @@
         ]
     },
     {
-        "_version": "3.1.0",
+        "_version": "3.2",
         "identification": {
             "id": "browseBooksSpace",
             "title": "{{title}}",
@@ -67,8 +74,8 @@
         "payload": {
             "contentNodes": [
                 {
-                    "type": "page",
-                    "id": "browseBooksPage"
+                    "type": "workpage",
+                    "id": "browseBooksWorkpage"
                 }
             ]
         },
@@ -83,22 +90,66 @@
         ]
     },
     {
-        "_version": "3.1.0",
+        "_version": "3.2",
         "identification": {
-            "id": "browseBooksPage",
-            "entityType": "page",
+            "id": "browseBooksWorkpage",
+            "entityType": "workpage",
             "title": "{{title}}",
             "description": "{{description}}"
         },
         "payload": {
-            "sections": [
+            "workpageConfig": {
+                "title": "{{title}}",
+                "description": "{{description}}"
+            },
+            "rows": [
                 {
-                    "id": "browseBooksSection",
-                    "title": "{{sectionTitle}}",
-                    "viz": [
+                    "id": "browseBooksRow",
+                    "rowConfig": {
+                        "title": "Row Title"
+                    },
+                    "columns": [
                         {
-                            "appId": "minimalsample.browse",
-                            "vizId": "Books-display"
+                            "id": "browseBooksAppColumn",
+                            "columnConfig": {
+                                "columnWidth": 12
+                            },
+                            "cells": [
+                                {
+                                    "id": "browseBooksAppCell",
+                                    "cellConfig": {},
+                                    "widgets": [
+                                        {
+                                            "id": "browseBooksAppWidget",
+                                            "viz": {
+                                                "appId": "minimalsample.browse",
+                                                "vizId": "Books-display"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "id": "ordersByShipperColumn",
+                            "columnConfig": {
+                                "columnWidth": 12
+                            },
+                            "cells": [
+                                {
+                                    "id": "ordersByShipperCell",
+                                    "cellConfig": {},
+                                    "widgets": [
+                                        {
+                                            "id": "ordersByShipperWidget",
+                                            "viz": {
+                                                "appId": "ordersbyshipper",
+                                                "vizId": "default"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     ]
                 }
@@ -109,14 +160,13 @@
                 "locale": "",
                 "textDictionary": {
                     "title": "Browse Books",
-                    "description": "Browse and manage books",
-                    "sectionTitle": "Books"
+                    "description": "Browse and manage books"
                 }
             }
         ]
     },
     {
-        "_version": "3.2.0",
+        "_version": "3.2",
         "identification": {
             "id": "browseBooksSite",
             "entityType": "site"
@@ -126,7 +176,7 @@
                 "title": "Browse Books",
                 "alias": "browseBooksSite",
                 "displaySettings": {
-                    "launchpadViewMode": "SpacesAndPages"
+                    "launchpadViewMode": "SpacesAndWorkPages"
                 },
                 "userCapabilities": {
                     "supportedLanguages": [
